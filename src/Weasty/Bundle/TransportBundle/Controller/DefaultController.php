@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    public function indexAction()
     {
-        return $this->render('WeastyTransportBundle:Default:index.html.twig', array('name' => $name));
+        return $this->render('WeastyTransportBundle:Default:index.html.twig');
     }
 
     /**
