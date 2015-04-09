@@ -13,8 +13,6 @@ use Doctrine\ORM\EntityRepository;
 class OperativeInfoRepository extends EntityRepository
 {
 
-
-
   /**
    * @param OperativeInfo $entity
    *

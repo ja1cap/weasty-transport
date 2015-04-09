@@ -27,7 +27,7 @@ class DefaultController extends Controller
         $repository = $this->getRepository();
 
         $criteria = $request->get('criteria', []);
-        $orderBy = $request->get('orderBy', []);
+        $orderBy = $request->get('orderBy', ['id' => 'DESC']);
         $limit = $request->get('limit', 10);
         $offset = $request->get('offset', 0);
 
