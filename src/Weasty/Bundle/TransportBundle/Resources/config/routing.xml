@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="weasty_transport_operative_info_items" path="/operative-info-items">
+        <default key="_controller">WeastyTransportBundle:Default:items</default>
+    </route>
+    <route id="weasty_transport_operative_info_launch_parser" path="/operative-info-launch-parser">
+        <default key="_controller">WeastyTransportBundle:Default:launchParser</default>
+    </route>
+</routes>

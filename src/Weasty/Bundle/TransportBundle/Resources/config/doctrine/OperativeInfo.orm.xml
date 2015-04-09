@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity repository-class="Weasty\Bundle\TransportBundle\Entity\OperativeInfoRepository" name="Weasty\Bundle\TransportBundle\Entity\OperativeInfo">
+    <lifecycle-callbacks>
+      <lifecycle-callback type="preUpdate" method="preUpdate"/>
+    </lifecycle-callbacks>
+    <id name="id" type="integer" column="id">
+      <generator strategy="AUTO"/>
+    </id>
+    <field name="title" type="string" column="title" length="255" nullable="true"/>
+    <field name="link" type="string" column="link" length="255" nullable="true"/>
+    <field name="dateCreated" type="datetime" column="dateCreated"/>
+    <field name="dateUpdated" type="datetime" column="dateUpdated" nullable="true"/>
+    <field name="guid" type="guid" column="guid" length="255" unique="true"/>
+    <field name="authorName" type="string" column="authorName" length="255" nullable="true"/>
+    <field name="authorEmail" type="string" column="authorEmail" length="255" nullable="true"/>
+    <field name="description" type="string" column="description" length="500" nullable="true"/>
+    <field name="content" type="text" column="content"/>
+    <field name="categories" type="simple_array" column="categories" nullable="true"/>
+  </entity>
+</doctrine-mapping>
