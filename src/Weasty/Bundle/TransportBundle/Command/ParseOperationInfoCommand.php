@@ -24,7 +24,7 @@ class ParseOperationInfoCommand extends ContainerAwareCommand {
     $parser = $this->getContainer()->get('weasty_transport.operative_info.feed.parser');
     $entities = $parser->parse();
 
-    $output->writeln(sprintf('<info>%s - operations information posts parsed</info>', count($entities)));
+    $output->writeln(sprintf('<info>%s - operation information posts parsed</info>', count($entities)));
 
   }
 }

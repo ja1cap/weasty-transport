@@ -48,7 +48,7 @@ class DefaultController extends Controller
         $entities = $parser->parse();
 
         return new JsonResponse([
-            'info' => sprintf('%s - operations information posts parsed', count($entities))
+            'info' => sprintf('%s - operations information post parsed', count($entities))
         ]);
 
     }

@@ -34,6 +34,8 @@ class OperativeInfoFeedParser {
     $entities = [];
     $repository = $this->getRepository();
 
+    $hasItems = $repository->findOneBy([], []);
+
     do {
 
       $feedUrl = 'http://www.minsktrans.by/ru/newsall/news/operativnaya-informatsiya.feed?type=atom&limitstart='.$itemsStart;
@@ -42,18 +44,19 @@ class OperativeInfoFeedParser {
       $feedEntities = $this->parseEntitiesFromFeed($feed);
       foreach($feedEntities as $entity){
         $entities[] = $entity;
-        $repository->persistEntity($entity);
       }
 
       $itemsStart+=$itemsPerRequest;
 
     } while ($feed && $feed->count() > 0);
 
-//    $entities = array_reverse($entities);
-//    foreach($entities as $entity){
-//      $repository->persistEntity($entity);
-//    }
+    if(!$hasItems){
+      $entities = array_reverse($entities);
+    }
 
+    foreach($entities as $entity){
+      $repository->persistEntity($entity);
+    }
     $repository->flushEntities($entities);
 
     return $entities;
