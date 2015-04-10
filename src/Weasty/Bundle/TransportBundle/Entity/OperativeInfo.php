@@ -404,13 +404,20 @@ class OperativeInfo implements ReaderItemInterface, \JsonSerializable
      * which is a value of any type other than a resource.
      */
     function jsonSerialize() {
+
+        $specialChars = ["&nbsp;", "\r", "\n"];
+        $replaceChars = ["", "", ""];
+
+        $description = str_replace($specialChars, $replaceChars, strip_tags($this->getDescription()));
+        $content = str_replace($specialChars, $replaceChars, strip_tags($this->getContent()));
+
         return [
             'title' => $this->getTitle(),
             'link' => $this->getLink(),
             'authorName' => $this->getAuthorName(),
             'authorEmail' => $this->getAuthorEmail(),
-            'description' => strip_tags($this->getDescription()),
-            'content' => strip_tags($this->getContent()),
+            'description' => $description,
+            'content' => $content,
             'categories' => $this->getCategories(),
             'transportNumbers' => $this->getTransportNumbers(),
             'dateCreated' => $this->getDateCreated(),
