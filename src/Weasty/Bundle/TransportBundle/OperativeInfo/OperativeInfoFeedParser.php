@@ -29,7 +29,7 @@ class OperativeInfoFeedParser {
     $reader = $this->getFeedReader();
 
     $itemsStart = 0;
-    $itemsPerRequest = 3;
+    $itemsPerRequest = 10;
 
     $entities = [];
     $repository = $this->getRepository();
