@@ -370,13 +370,15 @@ abstract class TransportInfo implements ReaderItemInterface, \JsonSerializable {
   function jsonSerialize() {
 
     $specialChars = ["&nbsp;", "\t", " ."];
-    $replaceChars = ["","", "."];
+    $replaceChars = ["", "", "."];
 
-    $description = trim(str_replace($specialChars, $replaceChars, strip_tags(html_entity_decode($this->getDescription()))));
-    $description = preg_replace(array('/\s{2,}/'/*, '/[\t\n]/'*/), ' ', $description);
+    $description = trim(str_replace($specialChars, $replaceChars, strip_tags($this->getDescription())));
+    $description = html_entity_decode($description);
+    $description = preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $description);
 
-    $content = trim(str_replace($specialChars, $replaceChars, strip_tags(html_entity_decode($this->getContent()))));
-    $content = preg_replace(array('/\s{2,}/'/*, '/[\t\n]/'*/), ' ', $content);
+    $content = trim(str_replace($specialChars, $replaceChars, strip_tags($this->getContent())));
+    $content = html_entity_decode($content);
+    $content = preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $content);
 
     return [
       'title' => $this->getTitle(),
