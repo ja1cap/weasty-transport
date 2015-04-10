@@ -3,12 +3,12 @@
   <entity repository-class="Weasty\Bundle\TransportBundle\Entity\TransportInfoRepository" name="Weasty\Bundle\TransportBundle\Entity\TransportInfo" inheritance-type="SINGLE_TABLE">
     <discriminator-column name="type"/>
     <discriminator-map>
-      <discriminator-mapping value="1" class="Weasty\Bundle\TransportBundle\Entity\OperativeInfo"/>
-      <discriminator-mapping value="2" class="Weasty\Bundle\TransportBundle\Entity\CityRoutesInfo"/>
-      <discriminator-mapping value="3" class="Weasty\Bundle\TransportBundle\Entity\VillageRoutesInfo"/>
-      <discriminator-mapping value="4" class="Weasty\Bundle\TransportBundle\Entity\IntercityRoutesInfo"/>
-      <discriminator-mapping value="5" class="Weasty\Bundle\TransportBundle\Entity\InternationalRoutesInfo"/>
-      <discriminator-mapping value="6" class="Weasty\Bundle\TransportBundle\Entity\HolidayTransportInfo"/>
+      <discriminator-mapping value="1" class="Weasty\Bundle\TransportBundle\Entity\CityRoutesInfo"/>
+      <discriminator-mapping value="2" class="Weasty\Bundle\TransportBundle\Entity\VillageRoutesInfo"/>
+      <discriminator-mapping value="3" class="Weasty\Bundle\TransportBundle\Entity\IntercityRoutesInfo"/>
+      <discriminator-mapping value="4" class="Weasty\Bundle\TransportBundle\Entity\InternationalRoutesInfo"/>
+      <discriminator-mapping value="5" class="Weasty\Bundle\TransportBundle\Entity\HolidayTransportInfo"/>
+      <discriminator-mapping value="6" class="Weasty\Bundle\TransportBundle\Entity\OperativeInfo"/>
     </discriminator-map>
     <lifecycle-callbacks>
       <lifecycle-callback type="preUpdate" method="preUpdate"/>
