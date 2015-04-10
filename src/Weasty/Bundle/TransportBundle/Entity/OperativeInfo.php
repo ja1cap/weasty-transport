@@ -66,6 +66,11 @@ class OperativeInfo implements ReaderItemInterface, \JsonSerializable
     private $categories;
 
     /**
+     * @var array
+     */
+    private $transportNumbers;
+
+    /**
      * OperativeInfo constructor.
      *
      */
@@ -365,6 +370,33 @@ class OperativeInfo implements ReaderItemInterface, \JsonSerializable
     }
 
     /**
+     * Set transportNumbers
+     *
+     * @param array $transportNumbers
+     * @return OperativeInfo
+     */
+    public function setTransportNumbers($transportNumbers)
+    {
+        $this->transportNumbers = $transportNumbers;
+
+        return $this;
+    }
+
+    /**
+     * Get transportNumbers
+     *
+     * @return array
+     */
+    public function getTransportNumbers()
+    {
+        return $this->transportNumbers ?: [
+            'bus' => [],
+            'trolleybus' => [],
+            'tram' => [],
+        ];
+    }
+
+    /**
      * (PHP 5 &gt;= 5.4.0)<br/>
      * Specify data which should be serialized to JSON
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
@@ -380,8 +412,10 @@ class OperativeInfo implements ReaderItemInterface, \JsonSerializable
             'description' => strip_tags($this->getDescription()),
             'content' => strip_tags($this->getContent()),
             'categories' => $this->getCategories(),
+            'transportNumbers' => $this->getTransportNumbers(),
             'dateCreated' => $this->getDateCreated(),
             'dateUpdated' => $this->getDateUpdated(),
         ];
     }
+
 }

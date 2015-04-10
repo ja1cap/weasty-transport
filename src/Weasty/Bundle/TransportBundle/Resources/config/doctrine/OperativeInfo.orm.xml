@@ -9,13 +9,14 @@
     </id>
     <field name="title" type="string" column="title" length="255" nullable="true"/>
     <field name="link" type="string" column="link" length="255" nullable="true"/>
-    <field name="dateCreated" type="datetime" column="dateCreated"/>
+    <field name="dateCreated" type="datetime" column="dateCreated" nullable="true"/>
     <field name="dateUpdated" type="datetime" column="dateUpdated" nullable="true"/>
     <field name="guid" type="guid" column="guid" length="255" unique="true"/>
     <field name="authorName" type="string" column="authorName" length="255" nullable="true"/>
     <field name="authorEmail" type="string" column="authorEmail" length="255" nullable="true"/>
     <field name="description" type="string" column="description" length="500" nullable="true"/>
-    <field name="content" type="text" column="content"/>
+    <field name="content" type="text" column="content" nullable="true"/>
+    <field name="transportNumbers" type="json_array" column="transportNumbers" length="500" nullable="true"/>
     <field name="categories" type="simple_array" column="categories" nullable="true"/>
   </entity>
 </doctrine-mapping>
