@@ -27,7 +27,7 @@ class DefaultController extends Controller
         $repository = $this->getRepository();
 
         $criteria = $request->get('criteria', []);
-        $orderBy = $request->get('orderBy', ['id' => 'DESC']);
+        $orderBy = $request->get('orderBy', ['dateCreated' => 'DESC']);
         $limit = $request->get('limit', 10);
         $offset = $request->get('offset', 0);
 
@@ -59,7 +59,7 @@ class DefaultController extends Controller
         $repository = $this->getDoctrine()->getRepository($classMetadata->discriminatorMap[$type]);
 
         $criteria = $request->get('criteria', []);
-        $orderBy = $request->get('orderBy', ['id' => 'DESC']);
+        $orderBy = $request->get('orderBy', ['dateCreated' => 'DESC']);
         $limit = $request->get('limit', 10);
         $offset = $request->get('offset', 0);
 
