@@ -10,7 +10,10 @@
     <route id="weasty_transport_operative_info_items" path="/operative-info-items">
         <default key="_controller">WeastyTransportBundle:Default:items</default>
     </route>
-    <route id="weasty_transport_operative_info_launch_parser" path="/operative-info-launch-parser">
+    <route id="weasty_transport_info_items" path="/transport-info-items/{type}">
+        <default key="_controller">WeastyTransportBundle:Default:itemsByTypeAction</default>
+    </route>
+    <route id="weasty_transport_info_launch_parser" path="/transport-info-launch-parser">
         <default key="_controller">WeastyTransportBundle:Default:launchParser</default>
     </route>
 </routes>

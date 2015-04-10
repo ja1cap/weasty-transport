@@ -3,9 +3,9 @@
 namespace Weasty\Bundle\TransportBundle\Entity;
 
 /**
- * Class OperativeInfoRepository
+ * Class CityRoutesInfoRepository
  * @package Weasty\Bundle\TransportBundle\Entity
  */
-class OperativeInfoRepository extends TransportInfoRepository
+class CityRoutesInfoRepository extends TransportInfoRepository
 {
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity repository-class="Weasty\Bundle\TransportBundle\Entity\OperativeInfoRepository" name="Weasty\Bundle\TransportBundle\Entity\OperativeInfo">
-    <field name="transportNumbers" type="json_array" column="transportNumbers" length="500" nullable="true"/>
+  <entity repository-class="Weasty\Bundle\TransportBundle\Entity\CityRoutesInfoRepository" name="Weasty\Bundle\TransportBundle\Entity\CityRoutesInfo">
   </entity>
 </doctrine-mapping>

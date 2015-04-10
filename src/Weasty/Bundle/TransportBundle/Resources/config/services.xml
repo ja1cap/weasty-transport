@@ -5,19 +5,48 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
+        <parameter key="weasty_transport.transport_info.entity.class">Weasty\Bundle\TransportBundle\Entity\TransportInfo</parameter>
+        <parameter key="weasty_transport.transport_info.repository.class">Weasty\Bundle\TransportBundle\Entity\TransportInfoRepository</parameter>
+
         <parameter key="weasty_transport.operative_info.entity.class">Weasty\Bundle\TransportBundle\Entity\OperativeInfo</parameter>
         <parameter key="weasty_transport.operative_info.repository.class">Weasty\Bundle\TransportBundle\Entity\OperativeInfoRepository</parameter>
-        <parameter key="weasty_transport.operative_info.feed.parser.class">Weasty\Bundle\TransportBundle\OperativeInfo\OperativeInfoFeedParser</parameter>
+        <parameter key="weasty_transport.operative_info.feed.parser.class">Weasty\Bundle\TransportBundle\Parser\OperativeInfoFeedParser</parameter>
+
+        <parameter key="weasty_transport.city_routes_info.entity.class">Weasty\Bundle\TransportBundle\Entity\CityRoutesInfo</parameter>
+        <parameter key="weasty_transport.city_routes_info.repository.class">Weasty\Bundle\TransportBundle\Entity\CityRoutesInfoRepository</parameter>
+        <parameter key="weasty_transport.city_routes_info.feed.parser.class">Weasty\Bundle\TransportBundle\Parser\CityRoutesInfoFeedParser</parameter>
+
+        <parameter key="weasty_transport.village_routes_info.entity.class">Weasty\Bundle\TransportBundle\Entity\VillageRoutesInfo</parameter>
+        <parameter key="weasty_transport.village_routes_info.repository.class">Weasty\Bundle\TransportBundle\Entity\VillageRoutesInfoRepository</parameter>
+        <parameter key="weasty_transport.village_routes_info.feed.parser.class">Weasty\Bundle\TransportBundle\Parser\VillageRoutesInfoFeedParser</parameter>
+
+        <parameter key="weasty_transport.intercity_routes_info.entity.class">Weasty\Bundle\TransportBundle\Entity\IntercityRoutesInfo</parameter>
+        <parameter key="weasty_transport.intercity_routes_info.repository.class">Weasty\Bundle\TransportBundle\Entity\IntercityRoutesInfoRepository</parameter>
+        <parameter key="weasty_transport.intercity_routes_info.feed.parser.class">Weasty\Bundle\TransportBundle\Parser\IntercityRoutesInfoFeedParser</parameter>
+
+        <parameter key="weasty_transport.international_routes_info.entity.class">Weasty\Bundle\TransportBundle\Entity\InternationalRoutesInfo</parameter>
+        <parameter key="weasty_transport.international_routes_info.repository.class">Weasty\Bundle\TransportBundle\Entity\InternationalRoutesInfoRepository</parameter>
+        <parameter key="weasty_transport.international_routes_info.feed.parser.class">Weasty\Bundle\TransportBundle\Parser\InternationalRoutesInfoFeedParser</parameter>
+
+        <parameter key="weasty_transport.holiday_transport_info.entity.class">Weasty\Bundle\TransportBundle\Entity\HolidayTransportInfo</parameter>
+        <parameter key="weasty_transport.holiday_transport_info.repository.class">Weasty\Bundle\TransportBundle\Entity\HolidayTransportInfoRepository</parameter>
+        <parameter key="weasty_transport.holiday_transport_info.feed.parser.class">Weasty\Bundle\TransportBundle\Parser\HolidayTransportInfoFeedParser</parameter>
+
     </parameters>
 
     <services>
+
+        <service id="weasty_transport.transport_info.repository" class="%weasty_transport.transport_info.repository.class%"
+                 factory-service="doctrine.orm.entity_manager"
+                 factory-method="getRepository">
+            <argument>%weasty_transport.transport_info.entity.class%</argument>
+        </service>
 
         <service id="weasty_transport.operative_info.repository" class="%weasty_transport.operative_info.repository.class%"
                  factory-service="doctrine.orm.entity_manager"
                  factory-method="getRepository">
             <argument>%weasty_transport.operative_info.entity.class%</argument>
         </service>
-
         <service id="weasty_transport.operative_info.feed.parser" class="%weasty_transport.operative_info.feed.parser.class%">
             <call method="setFeedReader">
                 <argument type="service" id="eko_feed.feed.reader"/>
@@ -26,5 +55,76 @@
                 <argument type="service" id="weasty_transport.operative_info.repository"/>
             </call>
         </service>
+
+        <service id="weasty_transport.city_routes_info.repository" class="%weasty_transport.city_routes_info.repository.class%"
+                 factory-service="doctrine.orm.entity_manager"
+                 factory-method="getRepository">
+            <argument>%weasty_transport.city_routes_info.entity.class%</argument>
+        </service>
+        <service id="weasty_transport.city_routes_info.feed.parser" class="%weasty_transport.city_routes_info.feed.parser.class%">
+            <call method="setFeedReader">
+                <argument type="service" id="eko_feed.feed.reader"/>
+            </call>
+            <call method="setRepository">
+                <argument type="service" id="weasty_transport.city_routes_info.repository"/>
+            </call>
+        </service>
+
+        <service id="weasty_transport.village_routes_info.repository" class="%weasty_transport.village_routes_info.repository.class%"
+                 factory-service="doctrine.orm.entity_manager"
+                 factory-method="getRepository">
+            <argument>%weasty_transport.village_routes_info.entity.class%</argument>
+        </service>
+        <service id="weasty_transport.village_routes_info.feed.parser" class="%weasty_transport.village_routes_info.feed.parser.class%">
+            <call method="setFeedReader">
+                <argument type="service" id="eko_feed.feed.reader"/>
+            </call>
+            <call method="setRepository">
+                <argument type="service" id="weasty_transport.village_routes_info.repository"/>
+            </call>
+        </service>
+
+        <service id="weasty_transport.intercity_routes_info.repository" class="%weasty_transport.intercity_routes_info.repository.class%"
+                 factory-service="doctrine.orm.entity_manager"
+                 factory-method="getRepository">
+            <argument>%weasty_transport.intercity_routes_info.entity.class%</argument>
+        </service>
+        <service id="weasty_transport.intercity_routes_info.feed.parser" class="%weasty_transport.intercity_routes_info.feed.parser.class%">
+            <call method="setFeedReader">
+                <argument type="service" id="eko_feed.feed.reader"/>
+            </call>
+            <call method="setRepository">
+                <argument type="service" id="weasty_transport.intercity_routes_info.repository"/>
+            </call>
+        </service>
+
+        <service id="weasty_transport.international_routes_info.repository" class="%weasty_transport.international_routes_info.repository.class%"
+                 factory-service="doctrine.orm.entity_manager"
+                 factory-method="getRepository">
+            <argument>%weasty_transport.international_routes_info.entity.class%</argument>
+        </service>
+        <service id="weasty_transport.international_routes_info.feed.parser" class="%weasty_transport.international_routes_info.feed.parser.class%">
+            <call method="setFeedReader">
+                <argument type="service" id="eko_feed.feed.reader"/>
+            </call>
+            <call method="setRepository">
+                <argument type="service" id="weasty_transport.international_routes_info.repository"/>
+            </call>
+        </service>
+
+        <service id="weasty_transport.holiday_transport_info.repository" class="%weasty_transport.holiday_transport_info.repository.class%"
+                 factory-service="doctrine.orm.entity_manager"
+                 factory-method="getRepository">
+            <argument>%weasty_transport.holiday_transport_info.entity.class%</argument>
+        </service>
+        <service id="weasty_transport.holiday_transport_info.feed.parser" class="%weasty_transport.holiday_transport_info.feed.parser.class%">
+            <call method="setFeedReader">
+                <argument type="service" id="eko_feed.feed.reader"/>
+            </call>
+            <call method="setRepository">
+                <argument type="service" id="weasty_transport.holiday_transport_info.repository"/>
+            </call>
+        </service>
+
     </services>
 </container>

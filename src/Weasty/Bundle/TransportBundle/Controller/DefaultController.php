@@ -38,18 +38,66 @@ class DefaultController extends Controller
     }
 
     /**
+     * @param $type
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function itemsByTypeAction( $type, Request $request ){
+
+        /**
+         * @var $classMetadata \Doctrine\ORM\Mapping\ClassMetadataInfo
+         */
+        $classMetadata = $this->getDoctrine()->getManager()->getClassMetadata('WeastyTransportBundle:TransportInfo');
+        if(!isset($classMetadata->discriminatorMap[$type])){
+            throw $this->createNotFoundException(sprintf('type[%s] not found'));
+        }
+
+        /**
+         * @var $repository \Weasty\Bundle\TransportBundle\Entity\TransportInfoRepository
+         */
+        $repository = $this->getDoctrine()->getRepository($classMetadata->discriminatorMap[$type]);
+
+        $criteria = $request->get('criteria', []);
+        $orderBy = $request->get('orderBy', ['id' => 'DESC']);
+        $limit = $request->get('limit', 10);
+        $offset = $request->get('offset', 0);
+
+        $entities = $repository->findBy($criteria, $orderBy, $limit, $offset);
+
+        return new JsonResponse($entities);
+
+    }
+
+    /**
      * @return JsonResponse
      */
     public function launchParserAction(){
-        /**
-         * @var $parser \Weasty\Bundle\TransportBundle\OperativeInfo\OperativeInfoFeedParser
-         */
-        $parser = $this->get('weasty_transport.operative_info.feed.parser');
-        $entities = $parser->parse();
 
-        return new JsonResponse([
-            'info' => sprintf('%s - operations information post parsed', count($entities))
-        ]);
+        $parsers = [
+          'operative_info',
+          'city_routes_info',
+          'village_routes_info',
+          'intercity_routes_info',
+          'international_routes_info',
+          'holiday_transport_info',
+        ];
+
+        $responseData = [];
+
+        foreach($parsers as $parserName){
+
+            $serviceName = sprintf('weasty_transport.%s.feed.parser', $parserName);
+            /**
+             * @var $parser \Weasty\Bundle\TransportBundle\Parser\TransportInfoFeedParser
+             */
+            $parser = $this->get($serviceName);
+            $entities = $parser->parse();
+            $responseData[$parserName] = sprintf('<info>%s - posts parsed</info>', count($entities));
+
+        }
+
+        return new JsonResponse($responseData);
 
     }
 

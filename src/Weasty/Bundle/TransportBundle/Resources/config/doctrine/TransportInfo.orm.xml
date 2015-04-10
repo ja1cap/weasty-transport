@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity repository-class="Weasty\Bundle\TransportBundle\Entity\TransportInfoRepository" name="Weasty\Bundle\TransportBundle\Entity\TransportInfo" inheritance-type="SINGLE_TABLE">
+    <discriminator-column name="type"/>
+    <discriminator-map>
+      <discriminator-mapping value="1" class="Weasty\Bundle\TransportBundle\Entity\OperativeInfo"/>
+      <discriminator-mapping value="2" class="Weasty\Bundle\TransportBundle\Entity\CityRoutesInfo"/>
+      <discriminator-mapping value="3" class="Weasty\Bundle\TransportBundle\Entity\VillageRoutesInfo"/>
+      <discriminator-mapping value="4" class="Weasty\Bundle\TransportBundle\Entity\IntercityRoutesInfo"/>
+      <discriminator-mapping value="5" class="Weasty\Bundle\TransportBundle\Entity\InternationalRoutesInfo"/>
+      <discriminator-mapping value="6" class="Weasty\Bundle\TransportBundle\Entity\HolidayTransportInfo"/>
+    </discriminator-map>
+    <lifecycle-callbacks>
+      <lifecycle-callback type="preUpdate" method="preUpdate"/>
+    </lifecycle-callbacks>
+    <id name="id" type="integer" column="id">
+      <generator strategy="AUTO"/>
+    </id>
+    <field name="title" type="string" column="title" length="255" nullable="true"/>
+    <field name="link" type="string" column="link" length="255" nullable="true"/>
+    <field name="dateCreated" type="datetime" column="dateCreated" nullable="true"/>
+    <field name="dateUpdated" type="datetime" column="dateUpdated" nullable="true"/>
+    <field name="guid" type="guid" column="guid" length="255" unique="true"/>
+    <field name="authorName" type="string" column="authorName" length="255" nullable="true"/>
+    <field name="authorEmail" type="string" column="authorEmail" length="255" nullable="true"/>
+    <field name="description" type="string" column="description" length="500" nullable="true"/>
+    <field name="content" type="text" column="content" nullable="true"/>
+    <field name="categories" type="simple_array" column="categories" nullable="true"/>
+  </entity>
+</doctrine-mapping>
