@@ -405,8 +405,8 @@ class OperativeInfo implements ReaderItemInterface, \JsonSerializable
      */
     function jsonSerialize() {
 
-        $specialChars = ["&nbsp;", "\r", "\n"];
-        $replaceChars = ["", "", ""];
+        $specialChars = ["&nbsp;", "\r", "\n", "\t"];
+        $replaceChars = ["", "", "", ""];
 
         $description = str_replace($specialChars, $replaceChars, strip_tags($this->getDescription()));
         $content = str_replace($specialChars, $replaceChars, strip_tags($this->getContent()));
