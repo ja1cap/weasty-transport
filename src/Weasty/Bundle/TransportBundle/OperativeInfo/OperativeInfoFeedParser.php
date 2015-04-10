@@ -55,9 +55,9 @@ class OperativeInfoFeedParser {
     }
 
     foreach($entities as $entity){
-      $repository->persistEntity($entity);
+      //$repository->persistEntity($entity);
     }
-    $repository->flushEntities($entities);
+    //$repository->flushEntities($entities);
 
     return $entities;
 
@@ -106,6 +106,7 @@ class OperativeInfoFeedParser {
 
       $entities[] = $entity;
     }
+    die;
 
     return $entities;
 
@@ -122,7 +123,7 @@ class OperativeInfoFeedParser {
     $replaceChars = [" ", "", ""];
 
     $filteredContent = str_replace($specialChars, $replaceChars, strip_tags($content));
-    //echo($filteredContent).PHP_EOL;
+    echo($filteredContent).PHP_EOL;
 
     $transportNumbers = [
       'bus' => [],
@@ -159,6 +160,7 @@ class OperativeInfoFeedParser {
           if($invalidCharsCounter > 1){
             break;
           }
+          echo $contentPart.PHP_EOL;
 
           if(strpos($contentPart, ',') !== false) {
             foreach ( explode( ',', $contentPart ) as $number ) {
@@ -189,6 +191,8 @@ class OperativeInfoFeedParser {
 
     }
 
+    var_dump($transportNumbers);
+
     return $transportNumbers;
 
   }
@@ -218,15 +222,16 @@ class OperativeInfoFeedParser {
    */
   protected function filterTransportNumber($number){
 
+    $specialChars = ["№", ".", ",", "&nbsp;", "\r", "\n"];
+    $replaceChars = ["", "", "", "", "", ""];
+
+    $number = str_replace($specialChars, $replaceChars, $number);
+    $number = trim($number);
+
     if(!$this->startsWithNumber($number)){
       return null;
     }
 
-    $specialChars = ["№", ".", ",", "&nbsp;", "\r", "\n"];
-    $replaceChars = ["", "", "", "", ""];
-
-    $number = str_replace($specialChars, $replaceChars, $number);
-    $number = trim($number);
     return $number;
 
   }
