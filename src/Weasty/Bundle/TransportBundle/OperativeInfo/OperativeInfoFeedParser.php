@@ -170,6 +170,10 @@ class OperativeInfoFeedParser {
             if ( $number = $this->filterTransportNumber( $contentPart ) ) {
               $numbers[] = $number;
             }
+          } elseif($this->startsWithNumberChar($contentPart)){
+            if ( $number = $this->filterTransportNumber( $contentPart ) ) {
+              $numbers[] = $number;
+            }
           } else {
             if($numbers){
               $invalidCharsCounter++;
@@ -194,6 +198,15 @@ class OperativeInfoFeedParser {
    *
    * @return bool
    */
+  protected function startsWithNumberChar($str){
+    return (strlen($str) > 1 && strpos($str, '№') === 0);
+  }
+
+  /**
+   * @param $str
+   *
+   * @return bool
+   */
   protected function startsWithNumber($str){
     return (preg_match('/^\d/', $str) === 1);
   }
@@ -209,7 +222,7 @@ class OperativeInfoFeedParser {
       return null;
     }
 
-    $specialChars = [".", ",", "&nbsp;", "\r", "\n"];
+    $specialChars = ["№", ".", ",", "&nbsp;", "\r", "\n"];
     $replaceChars = ["", "", "", "", ""];
 
     $number = str_replace($specialChars, $replaceChars, $number);
