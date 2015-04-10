@@ -93,7 +93,7 @@ class DefaultController extends Controller
              */
             $parser = $this->get($serviceName);
             $entities = $parser->parse();
-            $responseData[$parserName] = sprintf('<info>%s - posts parsed</info>', count($entities));
+            $responseData[$parserName] = sprintf('%s - posts parsed', count($entities));
 
         }
 
