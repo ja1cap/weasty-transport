@@ -75,12 +75,12 @@ class DefaultController extends Controller
     public function launchParserAction(){
 
         $parsers = [
-          'operative_info',
           'city_routes_info',
           'village_routes_info',
           'intercity_routes_info',
           'international_routes_info',
           'holiday_transport_info',
+          'operative_info',
         ];
 
         $responseData = [];
