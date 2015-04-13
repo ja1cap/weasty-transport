@@ -369,16 +369,23 @@ abstract class TransportInfo implements ReaderItemInterface, \JsonSerializable {
    */
   function jsonSerialize() {
 
-    $specialChars = ["&nbsp;", "\t", " ."];
-    $replaceChars = ["", "", "."];
+    $description = $this->getDescription();
+    $content = $this->getContent();
 
-    $description = trim(str_replace($specialChars, $replaceChars, strip_tags($this->getDescription())));
-    $description = html_entity_decode($description);
-    $description = preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $description);
+    if(empty($_REQUEST['html'])){
 
-    $content = trim(str_replace($specialChars, $replaceChars, strip_tags($this->getContent())));
-    $content = html_entity_decode($content);
-    $content = preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $content);
+      $specialChars = ["&nbsp;", "\t", " ."];
+      $replaceChars = ["", "", "."];
+
+      $description = trim(str_replace($specialChars, $replaceChars, strip_tags($description)));
+      $description = html_entity_decode($description);
+      $description = preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $description);
+
+      $content = trim(str_replace($specialChars, $replaceChars, strip_tags($content)));
+      $content = html_entity_decode($content);
+      $content = preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $content);
+
+    }
 
     return [
       'title' => $this->getTitle(),
