@@ -65,16 +65,20 @@ class OperativeInfo extends TransportInfo
     function jsonSerialize() {
 
         $data = parent::jsonSerialize();
-        $specialChars = ["\r", "\n"];
-        $replaceChars = ["", " "];
+        if(empty($_REQUEST['html'])){
 
-        $description = trim(str_replace($specialChars, $replaceChars, $data['description']));
-        $data['content'] = $description;
+            $specialChars = ["\r", "\n"];
+            $replaceChars = ["", " "];
 
-        $content = trim(str_replace($specialChars, $replaceChars, $data['content']));
-        $data['content'] = $content;
+            $description = trim(str_replace($specialChars, $replaceChars, $data['description']));
+            $data['content'] = $description;
 
-        $data['transportNumbers'] = $this->getTransportNumbers();
+            $content = trim(str_replace($specialChars, $replaceChars, $data['content']));
+            $data['content'] = $content;
+
+            $data['transportNumbers'] = $this->getTransportNumbers();
+
+        }
 
         return $data;
     }
