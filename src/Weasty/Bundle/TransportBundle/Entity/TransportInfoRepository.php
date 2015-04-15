@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityRepository;
  * Class TransportInfoRepository
  * @package Weasty\Bundle\TransportBundle\Entity
  */
-abstract class TransportInfoRepository extends EntityRepository {
+class TransportInfoRepository extends EntityRepository {
   /**
    * @param $query
    * @param array $types
@@ -16,20 +16,20 @@ abstract class TransportInfoRepository extends EntityRepository {
    */
   public function search($query, $types = array()){
 
+    $qb = $this->getEntityManager()->createQueryBuilder();
+    $tableName = $this->getClassMetadata()->table['name'];
     if(!$query){
       return [];
     }
 
-    $qb = $this->getEntityManager()->createQueryBuilder();
-    $sql = "SELECT ti.id FROM TransportInfo ti WHERE ".$qb->expr()->andX(
+    $sql = "SELECT ti.id FROM $tableName ti WHERE ".$qb->expr()->andX(
         $qb->expr()->like('ti.content', "%$query%"),
         ($types ? $qb->expr()->in('ti.type', $types) : null)
       );
 
     $ids = $this->getEntityManager()->getConnection()->fetchColumn($sql);
 
-    return $ids;
-    //return $this->findBy(['id'=>$ids]);
+    return $this->findBy(['id'=>$ids]);
 
   }
 
