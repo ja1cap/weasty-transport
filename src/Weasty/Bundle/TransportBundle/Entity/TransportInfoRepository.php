@@ -30,7 +30,7 @@ class TransportInfoRepository extends EntityRepository {
       );
     $sql .= " LIMIT $limit OFFSET $offset";
 
-    $idResults = $this->getEntityManager()->getConnection()->fetchAll($sql)
+    $idResults = $this->getEntityManager()->getConnection()->fetchAll($sql);
     $ids = array_map(function($idResult){
       return $idResult['id'];
     }, $idResults);
