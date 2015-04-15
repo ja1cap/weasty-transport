@@ -24,6 +24,11 @@ class TransportInfoRepository extends EntityRepository {
       return [];
     }
 
+    $validTypes = $this->getTypes();
+    $types = array_filter($types, function($type) use ($validTypes) {
+      return in_array($type, $validTypes);
+    });
+
     $sql = "SELECT ti.id FROM $tableName ti WHERE ".$qb->expr()->andX(
         $qb->expr()->like('ti.content', "'%$query%'"),
         ($types ? $qb->expr()->in('ti.type', $types) : null)
@@ -55,8 +60,22 @@ class TransportInfoRepository extends EntityRepository {
   /**
    * @return mixed
    */
+  public function getTypes(){
+    return array_keys($this->getDiscriminatorMap());
+  }
+
+  /**
+   * @return mixed
+   */
   public function getDiscriminatorColumnValue(){
     return $this->getClassMetadata()->discriminatorValue;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getDiscriminatorMap(){
+    return $this->getClassMetadata()->discriminatorMap;
   }
 
   /**
