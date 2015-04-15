@@ -13,7 +13,7 @@
     <route id="weasty_transport_info_items" path="/transport-info-items/{type}">
         <default key="_controller">WeastyTransportBundle:Default:itemsByType</default>
     </route>
-    <route id="weasty_transport_info_items_search" path="/transport-info-items/search">
+    <route id="weasty_transport_info_items_search" path="/transport-info-items-search">
         <default key="_controller">WeastyTransportBundle:Default:search</default>
     </route>
     <route id="weasty_transport_info_launch_parser" path="/transport-info-launch-parser">
