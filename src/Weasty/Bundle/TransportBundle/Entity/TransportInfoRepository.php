@@ -9,6 +9,31 @@ use Doctrine\ORM\EntityRepository;
  */
 abstract class TransportInfoRepository extends EntityRepository {
   /**
+   * @param $query
+   * @param array $types
+   *
+   * @return array
+   */
+  public function search($query, $types = array()){
+
+    $qb = $this->getEntityManager()->createQueryBuilder();
+    $tableName = $this->getClassMetadata()->table['name'];
+    if(!$query){
+      return [];
+    }
+
+    $sql = "SELECT ti.id FROM $tableName ti WHERE ".$qb->expr()->andX(
+        $qb->expr()->like('ti.content', "%$query%"),
+        ($types ? $qb->expr()->in('ti.type', $types) : null)
+      );
+
+    $ids = $this->getEntityManager()->getConnection()->fetchColumn($sql);
+
+    return $this->findBy(['id'=>$ids]);
+
+  }
+
+  /**
    * @return mixed
    */
   public function getType(){

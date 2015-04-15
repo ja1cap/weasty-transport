@@ -70,6 +70,26 @@ class DefaultController extends Controller
     }
 
     /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function searchAction( Request $request ){
+
+        $query = (string)$request->get('query');
+        $types = $request->get('types');
+
+        /**
+         * @var $repository \Weasty\Bundle\TransportBundle\Entity\TransportInfoRepository
+         */
+        $repository = $this->getDoctrine()->getRepository('WeastyTransportBundle:TransportInfo');
+        $entities = $repository->search($query, $types);
+
+        return new JsonResponse($entities);
+
+    }
+
+    /**
      * @return JsonResponse
      */
     public function launchParserAction(){
