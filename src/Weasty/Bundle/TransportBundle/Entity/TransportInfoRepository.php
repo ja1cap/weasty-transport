@@ -32,7 +32,13 @@ class TransportInfoRepository extends EntityRepository {
 
     $ids = $this->getEntityManager()->getConnection()->fetchColumn($sql);
 
-    return $this->findBy(['id'=>$ids]);
+    $qb
+      ->select('ti')
+      ->from($this->getEntityName(), 'ti')
+      ->where($qb->expr()->in('ti.id', $ids))
+    ;
+
+    return $qb->getQuery()->getResult();
 
   }
 
