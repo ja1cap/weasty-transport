@@ -78,12 +78,14 @@ class DefaultController extends Controller
 
         $query = (string)$request->get('query');
         $types = $request->get('types');
+        $limit = (int)$request->get('limit', 10);
+        $offset = (int)$request->get('offset', 0);
 
         /**
          * @var $repository \Weasty\Bundle\TransportBundle\Entity\TransportInfoRepository
          */
         $repository = $this->getDoctrine()->getRepository('WeastyTransportBundle:TransportInfo');
-        $entities = $repository->search($query, $types);
+        $entities = $repository->search($query, $types, $limit, $offset);
 
         return new JsonResponse($entities);
 

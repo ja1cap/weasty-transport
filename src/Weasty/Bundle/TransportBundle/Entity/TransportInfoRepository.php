@@ -9,12 +9,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class TransportInfoRepository extends EntityRepository {
   /**
-   * @param $query
+   * @param string $query
    * @param array $types
+   * @param int $limit
+   * @param int $offset
    *
    * @return array
    */
-  public function search($query, $types = array()){
+  public function search($query, $types = array(), $limit, $offset ){
 
     $qb = $this->getEntityManager()->createQueryBuilder();
     $tableName = $this->getClassMetadata()->table['name'];
@@ -23,9 +25,10 @@ class TransportInfoRepository extends EntityRepository {
     }
 
     $sql = "SELECT ti.id FROM $tableName ti WHERE ".$qb->expr()->andX(
-        $qb->expr()->like('ti.content', "%$query%"),
+        $qb->expr()->like('ti.content', "'%$query%'"),
         ($types ? $qb->expr()->in('ti.type', $types) : null)
       );
+    $sql .= " LIMIT $limit OFFSET $offset";
 
     $ids = $this->getEntityManager()->getConnection()->fetchColumn($sql);
 
