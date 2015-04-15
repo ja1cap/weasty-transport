@@ -16,13 +16,12 @@ abstract class TransportInfoRepository extends EntityRepository {
    */
   public function search($query, $types = array()){
 
-    $qb = $this->getEntityManager()->createQueryBuilder();
-    $tableName = $this->getClassMetadata()->table['name'];
     if(!$query){
       return [];
     }
 
-    $sql = "SELECT ti.id FROM $tableName ti WHERE ".$qb->expr()->andX(
+    $qb = $this->getEntityManager()->createQueryBuilder();
+    $sql = "SELECT ti.id FROM TransportInfo ti WHERE ".$qb->expr()->andX(
         $qb->expr()->like('ti.content', "%$query%"),
         ($types ? $qb->expr()->in('ti.type', $types) : null)
       );
