@@ -81,6 +81,10 @@ class DefaultController extends Controller
         $limit = (int)$request->get('limit', 10);
         $offset = (int)$request->get('offset', 0);
 
+        if(is_string($types)){
+            $types = explode(',', $types);
+        }
+
         /**
          * @var $repository \Weasty\Bundle\TransportBundle\Entity\TransportInfoRepository
          */
