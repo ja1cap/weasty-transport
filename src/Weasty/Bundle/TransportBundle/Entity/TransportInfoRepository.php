@@ -29,7 +29,8 @@ abstract class TransportInfoRepository extends EntityRepository {
 
     $ids = $this->getEntityManager()->getConnection()->fetchColumn($sql);
 
-    return $this->findBy(['id'=>$ids]);
+    return $ids;
+    //return $this->findBy(['id'=>$ids]);
 
   }
 
