@@ -40,11 +40,13 @@ class TransportInfoRepository extends EntityRepository {
       return $idResult['id'];
     }, $idResults);
 
-    $qb
-      ->select('ti')
-      ->from($this->getEntityName(), 'ti')
-      ->where($qb->expr()->in('ti.id', $ids))
-    ;
+    if($ids){
+      $qb
+        ->select('ti')
+        ->from($this->getEntityName(), 'ti')
+        ->where($qb->expr()->in('ti.id', $ids))
+      ;
+    }
 
     return $qb->getQuery()->getResult();
 
