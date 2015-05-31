@@ -391,8 +391,16 @@ abstract class TransportInfo implements ReaderItemInterface, \JsonSerializable {
       'description' => $description,
       'content' => $content,
       'categories' => $this->getCategories(),
-      'dateCreated' => $this->getDateCreated(),
-      'dateUpdated' => $this->getDateUpdated(),
+      'dateCreated' => [
+        'date' => $this->getDateCreated()->format('Y-m-d H:i:s'),
+        'timezone_type' => 3,
+        'timezone' => $this->getDateCreated()->getTimezone()->getName(),
+      ],
+      'dateUpdated' => [
+          'date' => $this->getDateUpdated()->format('Y-m-d H:i:s'),
+          'timezone_type' => 3,
+          'timezone' => $this->getDateUpdated()->getTimezone()->getName(),
+      ],
     ];
   }
 
