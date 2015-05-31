@@ -63,7 +63,7 @@ class DefaultController extends Controller
         $limit = $request->get('limit', 10);
         $offset = $request->get('offset', 0);
 
-        $entities = $repository->findBy($criteria, $orderBy, $limit, $offset);
+        $entities = $repository->findByType($type, $criteria, $orderBy, $limit, $offset);
 
         return new JsonResponse($entities);
 
