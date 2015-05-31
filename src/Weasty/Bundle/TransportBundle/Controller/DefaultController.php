@@ -2,6 +2,7 @@
 
 namespace Weasty\Bundle\TransportBundle\Controller;
 
+use Doctrine\Common\Cache\ApcCache;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,6 +46,17 @@ class DefaultController extends Controller
      */
     public function itemsByTypeAction( $type, Request $request ){
 
+        $criteria = $request->get('criteria', []);
+        $orderBy = $request->get('orderBy', ['dateCreated' => 'DESC']);
+        $limit = $request->get('limit', 10);
+        $offset = $request->get('offset', 0);
+
+        $cacheDriver = new ApcCache();
+        $cacheKey = 'transport_items_json_'.md5($type.'_'.serialize($criteria).'_'.serialize($orderBy).'_'.$limit.'_'.$offset);
+        if($items = $cacheDriver->fetch($cacheKey)){
+            return new JsonResponse($items);
+        }
+
         /**
          * @var $classMetadata \Doctrine\ORM\Mapping\ClassMetadataInfo
          */
@@ -58,14 +70,11 @@ class DefaultController extends Controller
          */
         $repository = $this->getDoctrine()->getRepository($classMetadata->discriminatorMap[$type]);
 
-        $criteria = $request->get('criteria', []);
-        $orderBy = $request->get('orderBy', ['dateCreated' => 'DESC']);
-        $limit = $request->get('limit', 10);
-        $offset = $request->get('offset', 0);
-
         $entities = $repository->findByType($type, $criteria, $orderBy, $limit, $offset);
+        $items = json_decode( json_encode( $entities ) );
+        $cacheDriver->save($cacheKey, $items, 5*60);
 
-        return new JsonResponse($entities);
+        return new JsonResponse($items);
 
     }
 
