@@ -8,6 +8,42 @@ use Doctrine\ORM\EntityRepository;
  * @package Weasty\Bundle\TransportBundle\Entity
  */
 class TransportInfoRepository extends EntityRepository {
+
+  /**
+   * @param $type
+   * @param $criteria
+   * @param $orderBy
+   * @param $limit
+   * @param $offset
+   * @return TransportInfo[]
+   */
+  public function findByType( $type, $criteria, $orderBy, $limit, $offset ){
+
+    $qb = $this->createQueryBuilder('alias');
+
+
+    foreach ($criteria as $criteriaField => $criteriaValue) {
+      $qb->andWhere($qb->expr()->eq($criteriaField, $criteriaValue));
+    }
+
+    foreach ($orderBy as $orderField => $order) {
+      $qb->orderBy($orderField, $order);
+    }
+
+    $qb
+        ->setFirstResult($offset)
+        ->setMaxResults($limit)
+    ;
+
+    $query = $qb->getQuery();
+
+    $cacheKey = 'transport_items_'.md5($type.'_'.serialize($criteria).'_'.serialize($orderBy).'_'.$limit.'_'.$offset);
+    $query->useResultCache(true, 60*5, $cacheKey);
+
+    return $query->getResult();
+
+  }
+
   /**
    * @param string $query
    * @param array $types
