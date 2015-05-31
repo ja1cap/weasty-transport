@@ -19,15 +19,16 @@ class TransportInfoRepository extends EntityRepository {
    */
   public function findByType( $type, $criteria, $orderBy, $limit, $offset ){
 
-    $qb = $this->createQueryBuilder('alias');
+    $alias = 'ti';
+    $qb = $this->createQueryBuilder($alias);
 
 
     foreach ($criteria as $criteriaField => $criteriaValue) {
-      $qb->andWhere($qb->expr()->eq($criteriaField, $criteriaValue));
+      $qb->andWhere($qb->expr()->eq($alias.'.'.$criteriaField, $criteriaValue));
     }
 
     foreach ($orderBy as $orderField => $order) {
-      $qb->orderBy($orderField, $order);
+      $qb->orderBy($alias.'.'.$orderField, $order);
     }
 
     $qb
